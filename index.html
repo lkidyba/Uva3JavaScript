@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio JavaScript Básico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #444;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin-top: 15px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 3px;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #999;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+        }
+        #welcomeMessage {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border: 1px solid #008CBA;
+            display: none;
+        }
+        #daysLived {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8e8e8;
+            border: 1px solid #d32f2f;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio JavaScript</h1>
+    
+    <div class="container">
+        <div id="randomUserWelcome"></div>
+        
+        <div id="userForm" class="form-group">
+            <h2>Ingresar datos personales</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" placeholder="Ingresa tu apellido">
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fechaNacimiento">
+            </div>
+            <button id="submitBtn">Enviar</button>
+        </div>
+        
+        <div id="welcomeMessage"></div>
+        <div id="daysLived"></div>
+    </div>
+
+    <script>
+        //  las tres variables con datos personales al azar y mostrar mensaje de bienvenida
+        const nombresAleatorios = ["Lautaro", "Santiago", "Jessica", "Leonel"];
+        const apellidosAleatorios = ["Herrero", "Messi", "Alvarado", "Gonzales"];
+        const fechasAleatorias = ["2000-01-11", "1976-12-10", "1995-08-02", "1980-03-07"];
+        
+        // valores aleatorios
+        const randomIndex = Math.floor(Math.random() * nombresAleatorios.length);
+        const nombreAleatorio = nombresAleatorios[randomIndex];
+        const apellidoAleatorio = apellidosAleatorios[randomIndex];
+        const fechaAleatoria = fechasAleatorias[randomIndex];
+        
+        // mensaje de bienvenida = datos aleatorios
+        document.addEventListener("DOMContentLoaded", function() {
+            const randomUserWelcome = document.getElementById("randomUserWelcome");
+            randomUserWelcome.innerHTML = `
+                <h3>Bienvenid@ a mi sitio Web</h3>
+                <p> datos de usuario aleatorios generados:</p>
+                <p><strong>Nombre:</strong> ${nombreAleatorio}</p>
+                <p><strong>Apellido:</strong> ${apellidoAleatorio}</p>
+                <p><strong>Fecha de Nacimiento:</strong> ${fechaAleatoria}</p>
+            `;
+            
+            // usuario ingresa sus propios datos
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.addEventListener("click", function() {
+                const nombre = document.getElementById("nombre").value;
+                const apellido = document.getElementById("apellido").value;
+                const fechaNacimiento = document.getElementById("fechaNacimiento").value;
+                
+                // Calcular y mostrar cuántos días de vida tiene el usuario
+                const fechaNac = new Date(fechaNacimiento);
+                const hoy = new Date();
+                const diferenciaMs = hoy - fechaNac;
+                const diasVividos = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+                
+                const daysLived = document.getElementById("daysLived");
+                daysLived.style.display = "block";
+                daysLived.innerHTML = `
+                    <h3>Datos que no sabias!</h3>
+                    <p>Has vivido un total de ${diasVividos} días desde que naciste.</p>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
